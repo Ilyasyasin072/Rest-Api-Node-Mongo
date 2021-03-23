@@ -1,21 +1,17 @@
-var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/";
+const mongoose = require('mongoose');
+const { Schema, model } = mongoose
+const url = 'mongodb://localhost:27017/reservasi';
 
-const conectionMongo = async () => {
-    MongoClient.connect(url, { useUnifiedTopology: true, useNewUrlParser: true }, function (err, db) {
-        if (err) throw err;
-        var dbo = db.db("reservasi");
-        dbo.collection("customers", function (err, res) {
-            if (err) throw err;
-            console.log(res)
-            db.close();
-        });
-    });
-}
-
-conectionMongo();
-
+mongoose.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+}).then(function() {
+    console.log('Connected to DB');
+}).catch(function(err){
+    console.log(err)
+})
 
 module.exports = {
-    conectionMongo
+    Schema, 
+    model
 }

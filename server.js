@@ -4,7 +4,6 @@ const routers = require('./route/route');
 const bodyParser = require('body-parser');
 require('dotenv').config()
 
-
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

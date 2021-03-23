@@ -1,8 +1,8 @@
+const Customer = require('../../models/Customer');
+
 const index = async (req, res) => {
-    var data = {
-        'method': 'GET',
-    }
-    res.json(data)
+    const customer = await Customer.find()
+    res.json(customer)
 }
 
 
