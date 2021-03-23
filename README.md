@@ -7,8 +7,15 @@
 - nodemon
 - mongoos
 - body-parse
+- router-group
 
 ## Result 
+
+- Request:
+    - EndPoint: 'api/v1/customer/data'
+    - Method: 'GET'
+
+- Result
 
 ```
     [
