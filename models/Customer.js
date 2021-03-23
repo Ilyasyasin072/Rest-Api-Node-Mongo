@@ -7,8 +7,9 @@ const customerSchema = new Schema({
     phone_number: String,
     address: String,
     point: String,
-    depost : String
-})
+    deposit : String,
+},
+{ timestamps: true, versionKey: false })
 
 const Customer = model('Customer', customerSchema)
 
