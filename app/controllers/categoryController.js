@@ -23,7 +23,7 @@ const store = async (req, res) => {
         name: 'VIP 21',
         description: 'lorem',
     }
-   
+
     try {
         var category = await Category.create(categoryBody)
 
@@ -68,9 +68,49 @@ const update = async (req, res) => {
     }
 }
 
+const show = async (req, res) => {
+
+    try {
+
+        const category = await Category.findById(req.params.id);
+
+        console.log(category)
+
+        const data = new ApiResponser('GET', category, 200)
+
+        res.json(data.data)
+
+    } catch (error) {
+
+        const err = new ApiResponser('Eror', error.message, 500)
+
+        res.json(err.data);
+    }
+}
+
+
+const destroy = async (req, res) => {
+
+    try {
+        
+        const category = await Category.deleteOne(req.params.id);
+
+        const data = new ApiResponser('DELETE', category , 200)
+
+        res.json(data.data)
+
+    } catch (error) {
+        
+        const err = new ApiResponser('Error', error.message, 500)
+
+        res.json(err.data)
+    }
+}
 
 module.exports = {
     index,
     store,
     update,
+    show,
+    destroy
 }

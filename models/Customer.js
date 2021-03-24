@@ -11,6 +11,6 @@ const customerSchema = new Schema({
 },
 { timestamps: true, versionKey: false })
 
-const Customer = model('Customer', customerSchema)
+const Customer = model('customer', customerSchema)
 
 module.exports = Customer

@@ -74,8 +74,49 @@ const update = async (req, res) => {
     res.json(data);
 }
 
+
+const show = async (req, res) => {
+
+    try {
+
+        const customer = await Customer.findById(req.params.id)
+
+        const data = new ApiResponser('GET', customer, 200)
+
+        res.json(data.data)
+        
+    } catch (error) {
+
+        const err = new ApiResponser('Error' ,error.message, 500)
+
+        res.json(err.data)
+        
+    }
+}
+
+
+const destroy = async (req, res) => {
+
+    try {
+        
+        const customer = await Customer.deleteOne(req.params.id);
+
+        const data = new ApiResponser('DELETE', customer, 200);
+
+        res.json(data.data)
+
+    } catch (error) {
+        
+        const err = new ApiResponser('Error', error.message, 500)
+
+        res.json(err.data)
+    }
+}
+
 module.exports = {
     index,
     store,
-    update
+    update,
+    show,
+    destroy
 }
