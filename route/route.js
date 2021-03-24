@@ -40,7 +40,7 @@ router.group('/v1', (router) => {
     // Reservation
     router.group('/reservation', (router) => {
         router.get('/', reservationController.index)
-        router.get('/store', reservationController.store)
+        router.post('/store', reservationController.store)
     })
 })
 

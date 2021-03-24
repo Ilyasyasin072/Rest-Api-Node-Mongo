@@ -39,14 +39,26 @@ const index = async (req, res) => {
 }
 
 const store = async (req, res) => {
-    const reservation = {
-        user_id: '60595c643248981f2374c6c8',
-        room_id: '605aeb3240a95968c68aea37',
-        name_reservation: 'ini ke relasi ga Hai'
-    }
-    const data = await Reservation.create(reservation)
+    try {
 
-    res.json(data)
+        const reservationField = {
+            user_id: '60595c643248981f2374c6c8',
+            room_id: '605aeb3240a95968c68aea37',
+            name_reservation: 'ini ke relasi ga Hai'
+        }
+        const reservation = await Reservation.create(reservationField)
+
+        const data = new ApiResponser('POST', reservation, 200);
+
+        res.json(data.data)
+
+    } catch (error) {
+
+        const err = new ApiResponser('POST', error.message, 200);
+
+        res.json(err.data)
+
+    }
 }
 
 module.exports = {
