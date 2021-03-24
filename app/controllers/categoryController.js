@@ -1,11 +1,15 @@
 const Category = require('../../models/Category')
+const ApiResponser = require('./traits/ApiResponse');
 
 const index = async (req, res) => {
     try {
 
         var category = await Category.find()
-        res.json(category)
-    
+
+        var data = new ApiResponser('GET', category, 200);
+
+        res.json(data.data);
+
     } catch (error) {
 
         res.json(error.message)
@@ -15,16 +19,19 @@ const index = async (req, res) => {
 const store = async (req, res) => {
 
     const categoryBody = {
-        name : 'VIP 2',
-        description : 'lorem',
+        name: 'VIP 21',
+        description: 'lorem',
     }
+   
     try {
         var category = await Category.create(categoryBody)
 
-        res.json(category)
+        var data = new ApiResponser('POST', category, 200);
+
+        res.json(data)
 
     } catch (error) {
-        
+
     }
 }
 
@@ -35,20 +42,20 @@ const update = async (req, res) => {
     const description = 'Update Juga';
 
     try {
-        
+
         const category = await Category.updateOne(
             {
-                _id : req.params.id
-            }, 
+                _id: req.params.id
+            },
             {
-            name, description
+                name, description
             }
         )
 
         res.json(category);
 
     } catch (error) {
-        
+
     }
 }
 

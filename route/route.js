@@ -14,7 +14,7 @@ router.group('/v1', (router) => {
 
     router.group('/category', (router) => {
         router.get('/', categoryController.index)
-        router.post('/store', categoryController.store)
+        router.get('/store', categoryController.store)
         router.get('/update/:id', categoryController.update)
     })
 })
