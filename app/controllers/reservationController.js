@@ -1,5 +1,5 @@
 const Reservation = require('../../models/Reservasi')
-var mongoose = require('mongoose');
+const ApiResponser = require('./traits/ApiResponse');
 
 const index = async (req, res) => {
 
@@ -33,7 +33,8 @@ const index = async (req, res) => {
     ])
 
     aggregateQuery.exec(function (err, result) {
-        res.json(result)
+        const data = new ApiResponser('GET', result, 200)
+        res.json(data.data);
     })
 }
 
