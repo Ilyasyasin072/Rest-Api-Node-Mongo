@@ -9,13 +9,14 @@ const categoryController = require('../app/controllers/categoryController');
 router.group('/v1', (router) => {
     router.group('/customer', (router) => {
         router.get('/', customerController.index);
-        router.get('/store', customerController.store);
+        router.post('/store', customerController.store);
+        router.put('/update/:id', customerController.update);
     })
 
     router.group('/category', (router) => {
         router.get('/', categoryController.index)
-        router.get('/store', categoryController.store)
-        router.get('/update/:id', categoryController.update)
+        router.post('/store', categoryController.store)
+        router.put('/update/:id', categoryController.update)
     })
 })
 

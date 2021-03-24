@@ -11,8 +11,9 @@ const index = async (req, res) => {
         res.json(data.data);
 
     } catch (error) {
+        var err = new ApiResponser('Error', error.message, 500);
 
-        res.json(error.message)
+        res.json(err.data);
     }
 }
 
@@ -28,10 +29,13 @@ const store = async (req, res) => {
 
         var data = new ApiResponser('POST', category, 200);
 
-        res.json(data)
+        res.json(data.data)
 
     } catch (error) {
 
+        var err = new ApiResponser('Error', error.message, 500);
+
+        res.json(err.data);
     }
 }
 
@@ -52,10 +56,15 @@ const update = async (req, res) => {
             }
         )
 
-        res.json(category);
+        var data = new ApiResponser('POST', category, 200);
+
+        res.json(data);
 
     } catch (error) {
 
+        var err = new ApiResponser('Error', error.message, 500);
+
+        res.json(err.data);
     }
 }
 
