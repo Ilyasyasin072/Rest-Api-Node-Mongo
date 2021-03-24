@@ -6,10 +6,10 @@
 //     })
 // }
 
-function index() {
-     const info = this.data
-    console.log(info);
-}
+// function index() {
+//      const info = this.data
+//     console.log(info);
+// }
   
   function ApiResponser(message, result, code) {
     this.data = {
@@ -19,6 +19,6 @@ function index() {
     }
   }
   
-  ApiResponser.prototype.sayHello = index;
+//   ApiResponser.prototype.sayHello = index;
 
   module.exports = ApiResponser;
