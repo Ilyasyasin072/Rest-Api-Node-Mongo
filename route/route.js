@@ -6,6 +6,7 @@ const router = express.Router()
 const customerController    = require('../app/controllers/customersController')
 const categoryController    = require('../app/controllers/categoryController')
 const RoomController        = require('../app/controllers/roomController')
+const reservationController = require('../app/controllers/reservationController')
 
 router.group('/v1', (router) => {
     
@@ -34,6 +35,12 @@ router.group('/v1', (router) => {
         router.put('/update/:id', RoomController.update)
         router.get('/show/:id', RoomController.show)
         router.get('/delete/:id', RoomController.destroy)
+    })
+
+    // Reservation
+    router.group('/reservation', (router) => {
+        router.get('/', reservationController.index)
+        router.get('/store', reservationController.store)
     })
 })
 
