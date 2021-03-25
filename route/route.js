@@ -16,6 +16,7 @@ router.group('/v1', (router) => {
     // Auth
     router.group('/auth', (router) => {
         router.post('/register', authController.register)
+        router.post('/login', authController.login)
     })
 
     // Customer
