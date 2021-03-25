@@ -27,13 +27,32 @@ const store = async (req, res) => {
         description: 'Manager Mewah'
     }
 
+    const checkData = await Job.findOne({
+        name: jobField.name
+    })
+
     try {
 
-        const job = await Job.create(jobField)
+        if (checkData) {
 
-        const data = new ApiResponser('POST', job, 200)
+            const message = 'Error Cannot Duplicate Record '
 
-        res.json(data.data)
+            var err = new ApiResponser('Error', message, 500);
+
+            res.status(500)
+            res.json(err.data);
+
+
+        } else {
+
+            const job = await Job.create(jobField)
+
+            const data = new ApiResponser('POST', job, 200)
+
+            res.status(200)
+
+            res.json(data.data)
+        }
 
     } catch (error) {
 
@@ -96,7 +115,7 @@ const show = async (req, res) => {
 }
 
 const destroy = async (req, res) => {
-    
+
     try {
 
         const job = await Job.findByIdAndDelete(req.params.id)

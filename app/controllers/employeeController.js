@@ -36,19 +36,36 @@ const store = async (req, res) => {
         name: "Dodi Bro",
         address: "Jalan Joko DIkromo",
         phone: "0854478794",
+        email: 'aa@gmail.com',
         qualification: "S1",
         date_of_entry: "02/02/2021",
         date_of_birht: "02-02-1994",
         date_of_out: "",
     }
 
+    const checkData = await Employee.findOne({
+        email: employeeField.email
+    })
+
     try {
 
-        const employee = await Employee.create(employeeField)
+        if (checkData) {
 
-        const data = new ApiResponser('POST', employee, 200)
+            const message = 'Error Cannot Duplicate Record '
 
-        res.json(data.data)
+            var err = new ApiResponser('Error', message, 500);
+
+            res.status(500)
+            res.json(err.data);
+
+        } else {
+
+            const employee = await Employee.create(employeeField)
+
+            const data = new ApiResponser('POST', employee, 200)
+
+            res.json(data.data)
+        }
 
     } catch (error) {
 
@@ -66,6 +83,7 @@ const update = async (req, res) => {
         name: "Dodi Bro",
         address: "Jalan Joko DIkromo",
         phone: "0854478794",
+        email: 'aa@gmail.com',
         qualification: "S1",
         date_of_entry: "02/02/2021",
         date_of_birht: "02-02-1994",
@@ -108,7 +126,7 @@ const show = async (req, res) => {
     const AggregateQuery = Employee.aggregate([
         {
             $match: { _id: ObjectId(req.params.id) }
-        }, 
+        },
         {
             $lookup: {
                 from: 'jobs',
@@ -137,7 +155,7 @@ const show = async (req, res) => {
 const destroy = async (req, res) => {
 
     try {
-        
+
         const employee = await Employee.findOneAndDelete(req.params.id)
 
         const data = new ApiResponser('DELETE', employee, 200)
@@ -145,8 +163,8 @@ const destroy = async (req, res) => {
         res.json(data.data)
 
     } catch (error) {
-        
-        const err = new ApiResponser('GET', error.message , 200)
+
+        const err = new ApiResponser('GET', error.message, 200)
 
         res.json(err.data)
 

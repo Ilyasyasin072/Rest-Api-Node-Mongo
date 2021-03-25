@@ -24,12 +24,29 @@ const store = async (req, res) => {
         description: 'lorem',
     }
 
+    const checkData = await Category.findOne({
+        name: categoryBody.name
+    })
+
     try {
-        var category = await Category.create(categoryBody)
 
-        var data = new ApiResponser('POST', category, 200);
+        if (checkData) {
 
-        res.json(data.data)
+            const message = 'Error Cannot Duplicate Record '
+
+            var err = new ApiResponser('Error', message, 500);
+            
+            res.status(500)
+            res.json(err.data);
+
+        } else {
+
+            var category = await Category.create(categoryBody)
+
+            var data = new ApiResponser('POST', category, 200);
+
+            res.json(data.data)
+        }
 
     } catch (error) {
 
@@ -92,15 +109,15 @@ const show = async (req, res) => {
 const destroy = async (req, res) => {
 
     try {
-        
+
         const category = await Category.deleteOne(req.params.id);
 
-        const data = new ApiResponser('DELETE', category , 200)
+        const data = new ApiResponser('DELETE', category, 200)
 
         res.json(data.data)
 
     } catch (error) {
-        
+
         const err = new ApiResponser('Error', error.message, 500)
 
         res.json(err.data)

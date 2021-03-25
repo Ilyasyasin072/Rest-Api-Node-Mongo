@@ -4,10 +4,11 @@ const {
 
 const employeeSchema = new Schema({
 
-    job_id : Schema.ObjectId,
+    job_id: Schema.ObjectId,
     name: { type: String, required: true },
     address: { type: String, required: true },
     phone: { type: String, required: true },
+    email: { type : String, unique: true},
     qualification: { type: String, required: true },
     date_of_entry: { type: Date, default: Date.now },
     date_of_birth: { type: Date },

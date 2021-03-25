@@ -29,10 +29,14 @@ const store = async (req, res) => {
         point: '0',
         deposit: '0',
     }
+    
+    // const checkData = await Customer.findOne({
+    //     name: categoryBody.name
+    // })
 
     try {
 
-        console.log(customer);
+        // console.log(customer);
 
         const store = await Customer.create(customer);
         res.json({

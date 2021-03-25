@@ -70,6 +70,7 @@ router.group('/v1', (router) => {
     // Check
     router.group('/check', (router) => {
         router.get('/', checkController.index)
+        router.post('/store', checkController.store)
     })
 })
 
