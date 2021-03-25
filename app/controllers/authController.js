@@ -10,11 +10,11 @@ const config = require('../../config/config')
 
 
 const register = async (req, res) => {
-    
+
     const { name, username, email, password } = req.body;
-    
+
     const hashedPassword = bcrypt.hashSync(password, 8)
-    
+
     const userField = {
         name: name,
         username: username,
@@ -42,19 +42,28 @@ const login = async (req, res) => {
 
     const { username, password } = req.body;
 
-    var token = req.headers['x-access-token']
+    if (username && password) {
+        const users = await User.findOne({ username: username }).then(user => {
 
-    const users = await User.findOne({ username: username, password: password })
+            bcrypt.compare(password, user.password, (err, data) => {
+                if (err) throw err;
 
-    if (users) {
-        var token = req.headers['x-access-token']
-        if (!token) return res.status(500).json({ 'status': 'Not Allowed Token' })
-        jwt.verify(token, config.secret, function (err, decoded) {
-            if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-            res.status(200).send(decoded);
+                if (data) {
+                    var token = req.headers['x-access-token']
+                    if (!token) return res.status(500).json({ 'status': 'Not Allowed Token' })
+                    jwt.verify(token, config.secret, function (err, decoded) {
+                        if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+                        res.cookie('jwt',token);
+                        return res.status(200).json({ msg: "Login success" })
+                    })
+                } else {
+                    return res.status(401).json({ msg: "Invalid credencial" })
+                }
+            })
         })
+        return users
     } else {
-        res.status(500).send({ auth: false, message: 'Not Have Account' });
+        return res.status(401).json({ msg: "Invalid credencial" })
     }
 }
 
