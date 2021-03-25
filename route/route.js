@@ -61,6 +61,10 @@ router.group('/v1', (router) => {
     // Jobs
     router.group('/jobs', (router) => {
         router.get('/', jobController.index)
+        router.get('/store', jobController.store)
+        router.get('/update/:id', jobController.update)
+        router.get('/show/:id', jobController.show)
+        router.get('/delete/:id', jobController.destroy)
     })
 })
 
