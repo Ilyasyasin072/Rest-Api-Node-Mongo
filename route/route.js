@@ -26,11 +26,11 @@ router.group('/v1', (router) => {
 
     // Customer
     router.group('/customer', (router) => {
-        router.get('/', customerController.index)
-        router.post('/store', customerController.store)
-        router.put('/update/:id', customerController.update)
-        router.get('/show/:id', customerController.show)
-        router.delete('/delete/:id', customerController.destroy)
+        router.get('/', [verifyToken], customerController.index)
+        router.post('/store', [verifyToken], customerController.store)
+        router.put('/update/:id', [verifyToken], customerController.update)
+        router.get('/show/:id', [verifyToken], customerController.show)
+        router.delete('/delete/:id', [verifyToken], customerController.destroy)
     })
 
     // Categories
@@ -44,44 +44,44 @@ router.group('/v1', (router) => {
 
     // Room
     router.group('/room', (router) => {
-        router.get('/', RoomController.index)
-        router.post('/store', RoomController.store)
-        router.put('/update/:id', RoomController.update)
-        router.get('/show/:id', RoomController.show)
-        router.delete('/delete/:id', RoomController.destroy)
+        router.get('/', [verifyToken], RoomController.index)
+        router.post('/store', [verifyToken], RoomController.store)
+        router.put('/update/:id', [verifyToken], RoomController.update)
+        router.get('/show/:id', [verifyToken], RoomController.show)
+        router.delete('/delete/:id', [verifyToken], RoomController.destroy)
     })
 
     // Reservation
     router.group('/reservation', (router) => {
-        router.get('/', reservationController.index)
-        router.post('/store', reservationController.store)
-        router.put('/update/:id', reservationController.update)
-        router.get('/show/:id', reservationController.show)
-        router.delete('/delete/:id', reservationController.destroy)
+        router.get('/', [verifyToken], reservationController.index)
+        router.post('/store', [verifyToken], reservationController.store)
+        router.put('/update/:id', [verifyToken], reservationController.update)
+        router.get('/show/:id', [verifyToken], reservationController.show)
+        router.delete('/delete/:id', [verifyToken], reservationController.destroy)
     })
 
     // Employee
     router.group('/employee', (router) => {
-        router.get('/', employeeController.index)
-        router.post('/store', employeeController.store)
-        router.put('/update/:id', employeeController.update)
-        router.get('/show/:id', employeeController.show)
-        router.delete('/delete/:id', employeeController.destroy)
+        router.get('/', [verifyToken], employeeController.index)
+        router.post('/store', [verifyToken], employeeController.store)
+        router.put('/update/:id', [verifyToken], employeeController.update)
+        router.get('/show/:id', [verifyToken], employeeController.show)
+        router.delete('/delete/:id', [verifyToken], employeeController.destroy)
     })
 
     // Jobs
     router.group('/jobs', (router) => {
-        router.get('/', jobController.index)
-        router.get('/store', jobController.store)
-        router.get('/update/:id', jobController.update)
-        router.get('/show/:id', jobController.show)
-        router.get('/delete/:id', jobController.destroy)
+        router.get('/', [verifyToken], jobController.index)
+        router.get('/store', [verifyToken], jobController.store)
+        router.get('/update/:id', [verifyToken], jobController.update)
+        router.get('/show/:id', [verifyToken], jobController.show)
+        router.get('/delete/:id', [verifyToken], jobController.destroy)
     })
 
     // Check
     router.group('/check', (router) => {
-        router.get('/', checkController.index)
-        router.post('/store', checkController.store)
+        router.get('/', [verifyToken], checkController.index)
+        router.post('/store', [verifyToken], checkController.store)
     })
 })
 
