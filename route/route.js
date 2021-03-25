@@ -9,7 +9,7 @@ const RoomController = require('../app/controllers/roomController')
 const reservationController = require('../app/controllers/reservationController')
 const employeeController = require('../app/controllers/employeeController')
 const jobController = require('../app/controllers/jobController')
-
+const checkController = require('../app/controllers/checkController')
 
 router.group('/v1', (router) => {
 
@@ -65,6 +65,11 @@ router.group('/v1', (router) => {
         router.get('/update/:id', jobController.update)
         router.get('/show/:id', jobController.show)
         router.get('/delete/:id', jobController.destroy)
+    })
+
+    // Check
+    router.group('/check', (router) => {
+        router.get('/', checkController.index)
     })
 })
 
