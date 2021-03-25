@@ -10,12 +10,15 @@ const config = require('../../config/config')
 
 
 const register = async (req, res) => {
-
-    const hashedPassword = bcrypt.hashSync('root123', 8)
+    
+    const { name, username, email, password } = req.body;
+    
+    const hashedPassword = bcrypt.hashSync(password, 8)
+    
     const userField = {
-        name: 'root',
-        username: 'root123',
-        email: 'root123',
+        name: name,
+        username: username,
+        email: email,
         password: hashedPassword
     }
 
@@ -23,13 +26,13 @@ const register = async (req, res) => {
         if (err) return res.status(500).send('There was a problem registering the user.')
         var token = jwt.sign({
             id: user._id
-        }, 
-        config.secret, {
+        },
+            config.secret, {
             expiresIn: 86400
         })
 
         res.status(200).send({
-            auth: true, token:token
+            auth: true, token: token
         })
     }))
 
@@ -37,15 +40,22 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
 
+    const { username, password } = req.body;
+
     var token = req.headers['x-access-token']
 
-    if (!token) return res.status(500).send('Not Allowed Token')
+    const users = await User.findOne({ username: username, password: password })
 
-    jwt.verify(token, config.secret, function(err, decoded) {
-        if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-    
-    res.status(200).send(decoded);
-    })
+    if (users) {
+        var token = req.headers['x-access-token']
+        if (!token) return res.status(500).json({ 'status': 'Not Allowed Token' })
+        jwt.verify(token, config.secret, function (err, decoded) {
+            if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+            res.status(200).send(decoded);
+        })
+    } else {
+        res.status(500).send({ auth: false, message: 'Not Have Account' });
+    }
 }
 
 module.exports = {

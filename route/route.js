@@ -1,6 +1,6 @@
 const express = require('express')
 require('express-group-routes')
-
+const bp = require('body-parser')
 const router = express.Router()
 
 const customerController = require('../app/controllers/customersController')
@@ -11,12 +11,14 @@ const employeeController = require('../app/controllers/employeeController')
 const jobController = require('../app/controllers/jobController')
 const checkController = require('../app/controllers/checkController')
 const authController = require('../app/controllers/authController')
+
+
 router.group('/v1', (router) => {
 
     // Auth
     router.group('/auth', (router) => {
         router.post('/register', authController.register)
-        router.post('/login', authController.login)
+        router.get('/login', authController.login)
     })
 
     // Customer

@@ -4,16 +4,16 @@ const routers = require('./route/route');
 const bodyParser = require('body-parser');
 require('dotenv').config()
 
-app.use(bodyParser.json());
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(bodyParser.urlencoded({
-    extended: true
-}))
+const cookieParser = require('cookie-parser');
 
+app.use(cookieParser());
 app.use(bodyParser.json({
     limit: "8mb",
 }));
+
+app.use(bodyParser.urlencoded({
+    extended: true
+}))
 
 app.use(function(req, res, next) {
 
