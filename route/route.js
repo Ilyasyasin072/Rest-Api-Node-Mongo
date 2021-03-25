@@ -79,10 +79,24 @@ router.group('/v1', (router) => {
     })
 
     // Check
-    router.group('/check', (router) => {
-        router.get('/', [verifyToken], checkController.index)
+    express.application.prefix = express.Router.prefix = function(path, middleware, configure) {
+        configure(router);
+        this.use(path, middleware, router);
+        return router;
+    }
+
+    router.prefix('/check', [verifyToken], async function (user) {
+        router.get('/', checkController.index)
         router.post('/store', [verifyToken], checkController.store)
-    })
+        // user.route('/details').get(function(req, res) {
+        //     res.status(201).send('Hello this is my personal details')
+        // }); //also you can use controller method if you have any
+    });
+
+    // router.group('/check', (router) => {
+    //     router.get('/', [verifyToken], checkController.index)
+    //     router.post('/store', [verifyToken], checkController.store)
+    // })
 })
 
 module.exports = router
