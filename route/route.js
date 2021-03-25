@@ -31,18 +31,19 @@ router.group('/v1', (router) => {
     // Room
     router.group('/room', (router) => {
         router.get('/', RoomController.index)
-        router.get('/store', RoomController.store)
+        router.post('/store', RoomController.store)
         router.put('/update/:id', RoomController.update)
         router.get('/show/:id', RoomController.show)
-        router.get('/delete/:id', RoomController.destroy)
+        router.delete('/delete/:id', RoomController.destroy)
     })
 
     // Reservation
     router.group('/reservation', (router) => {
         router.get('/', reservationController.index)
-        router.get('/store', reservationController.store)
-        router.get('/update/:id', reservationController.update)
+        router.post('/store', reservationController.store)
+        router.put('/update/:id', reservationController.update)
         router.get('/show/:id', reservationController.show)
+        router.delete('/delete/:id', reservationController.destroy)
     })
 })
 

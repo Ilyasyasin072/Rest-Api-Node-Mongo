@@ -98,7 +98,7 @@ const show = async (req, res) => {
 
     const ObjectId = mongoose.Types.ObjectId;
 
-    const data = Reservation.aggregate([
+    const aggregateQuery = Reservation.aggregate([
         {
             $match: { _id: ObjectId(req.params.id) }
         },
@@ -128,18 +128,28 @@ const show = async (req, res) => {
         },
     ])
 
-    data.exec((err, result) => {
+    aggregateQuery.exec((err, result) => {
+        if (err) throw err;
         res.json(result)
     })
-    
+
 }
 
 const destroy = async (req, res) => {
 
     try {
 
+        const reservation = Reservation.findOneAndDelete(req.params.id)
+
+        const data = new ApiResponser('DELETE', reservation, 200)
+
+        res.json(data.data)
+
     } catch (error) {
 
+        const err = new ApiResponser('Error', error.message, 500)
+
+        res.json(err.data)
     }
 }
 
@@ -147,5 +157,6 @@ module.exports = {
     index,
     store,
     update,
-    show
+    show,
+    destroy
 }

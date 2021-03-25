@@ -20,14 +20,14 @@ const index = async (req, res) => {
 const store = async (req, res) => {
 
     const roomField = {
-        name_room : 'ROOM 01',
-        type_room : 'ROOM TYPE',
+        name_room: 'ROOM 01',
+        type_room: 'ROOM TYPE',
         price_room: '12000',
         number_of_room: '12',
     }
-    
+
     try {
-        
+
         const room = await Room.create(roomField)
 
         const data = new ApiResponser('GET', room, 200)
@@ -39,16 +39,31 @@ const store = async (req, res) => {
         const err = new ApiResponser('Error', error.message, 500)
 
         res.json(err.data)
-        
+
     }
 
 }
 
 const update = async (req, res) => {
-    
+
+    const roomField = {
+        name_room: 'ROOM 01',
+        type_room: 'ROOM TYPE',
+        price_room: '12000',
+        number_of_room: '12',
+    }
+
     try {
-        
-        const room = await Room.find(req.params.id)
+
+        const room = await Room.updateOne({
+            _id: req.params.id
+        }, {
+
+            name_room: roomField.name_room,
+            type_room: roomField.type_room,
+            price_room: roomField.price_room,
+            number_of_room: roomField.number_of_room,
+        })
 
         const data = new ApiResponser('GET', room, 200)
 
@@ -59,13 +74,13 @@ const update = async (req, res) => {
         const err = new ApiResponser('Error', error.message, 500)
 
         res.json(err.data)
-        
+
     }
 
 }
 
 const show = async (req, res) => {
-    
+
     try {
 
         const room = await Room.findById(req.params.id)
@@ -79,16 +94,16 @@ const show = async (req, res) => {
         const err = new ApiResponser('Error', error.message, 500)
 
         res.json(err.data)
-        
+
     }
 
 }
 
-const destroy = async(req, res) => {
-    
+const destroy = async (req, res) => {
+
     try {
-       
-    
+
+
         const room = await Room.findByIdAndDelete(req.params.id)
 
         const data = new ApiResponser('GET', room, 200)
@@ -100,7 +115,7 @@ const destroy = async(req, res) => {
         const err = new ApiResponser('Error', error.message, 500)
 
         res.json(err.data)
-        
+
     }
 
 }
