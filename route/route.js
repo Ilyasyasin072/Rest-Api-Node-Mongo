@@ -1,8 +1,11 @@
 const express = require('express')
 require('express-group-routes')
 const bp = require('body-parser')
+// const { withJWTAuthMiddleware } = require("express-kun");
 const router = express.Router()
 
+// const protectedRouter = withJWTAuthMiddleware(router, "7d7a9b82b273649495972cfea4e87d9b97dc67f8a323dd5cb6216b1129339fdd9fcdd1138a7645934e97cfad9461351bea476045ecc87a91376ae3361e496971");
+const { verifyToken } = require('../app/middleware/authJwt');
 const customerController = require('../app/controllers/customersController')
 const categoryController = require('../app/controllers/categoryController')
 const RoomController = require('../app/controllers/roomController')
@@ -32,11 +35,11 @@ router.group('/v1', (router) => {
 
     // Categories
     router.group('/category', (router) => {
-        router.get('/', categoryController.index)
-        router.post('/store', categoryController.store)
-        router.put('/update/:id', categoryController.update)
-        router.get('/show/:id', categoryController.show)
-        router.delete('/delete/:id', categoryController.destroy)
+        router.get('/', [verifyToken], categoryController.index)
+        router.post('/store', [verifyToken], categoryController.store)
+        router.put('/update/:id', [verifyToken], categoryController.update)
+        router.get('/show/:id', [verifyToken], categoryController.show)
+        router.delete('/delete/:id', [verifyToken], categoryController.destroy)
     })
 
     // Room

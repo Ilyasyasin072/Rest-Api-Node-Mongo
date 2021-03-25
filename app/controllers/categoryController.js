@@ -1,14 +1,19 @@
 const Category = require('../../models/Category')
 const ApiResponser = require('./traits/ApiResponse');
+var jwt = require('jsonwebtoken');
+const config = require('../../config/config')
 
 const index = async (req, res) => {
     try {
-
-        var category = await Category.find()
-
-        var data = new ApiResponser('GET', category, 200);
-
-        res.json(data.data);
+        // var token = req.headers['x-access-token']
+        // if (!token) return res.status(500).json({ 'status': 'Not Allowed Token' })
+        // jwt.verify(token, config.secret, async (err, decoded) => {
+        //     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+        //     res.cookie('jwt', token);
+            var category = await Category.find()
+            var data = new ApiResponser('GET', category, 200);
+            res.json(data.data);
+        // })
 
     } catch (error) {
         var err = new ApiResponser('Error', error.message, 500);
@@ -35,7 +40,7 @@ const store = async (req, res) => {
             const message = 'Error Cannot Duplicate Record '
 
             var err = new ApiResponser('Error', message, 500);
-            
+
             res.status(500)
             res.json(err.data);
 
