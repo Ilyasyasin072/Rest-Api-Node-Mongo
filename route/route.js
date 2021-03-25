@@ -10,8 +10,13 @@ const reservationController = require('../app/controllers/reservationController'
 const employeeController = require('../app/controllers/employeeController')
 const jobController = require('../app/controllers/jobController')
 const checkController = require('../app/controllers/checkController')
-
+const authController = require('../app/controllers/authController')
 router.group('/v1', (router) => {
+
+    // Auth
+    router.group('/auth', (router) => {
+        router.post('/register', authController.register)
+    })
 
     // Customer
     router.group('/customer', (router) => {
