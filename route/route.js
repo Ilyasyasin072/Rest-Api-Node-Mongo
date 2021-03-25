@@ -3,13 +3,16 @@ require('express-group-routes')
 
 const router = express.Router()
 
-const customerController    = require('../app/controllers/customersController')
-const categoryController    = require('../app/controllers/categoryController')
-const RoomController        = require('../app/controllers/roomController')
+const customerController = require('../app/controllers/customersController')
+const categoryController = require('../app/controllers/categoryController')
+const RoomController = require('../app/controllers/roomController')
 const reservationController = require('../app/controllers/reservationController')
+const employeeController = require('../app/controllers/employeeController')
+const jobController = require('../app/controllers/jobController')
+
 
 router.group('/v1', (router) => {
-    
+
     // Customer
     router.group('/customer', (router) => {
         router.get('/', customerController.index)
@@ -44,6 +47,20 @@ router.group('/v1', (router) => {
         router.put('/update/:id', reservationController.update)
         router.get('/show/:id', reservationController.show)
         router.delete('/delete/:id', reservationController.destroy)
+    })
+
+    // Employee
+    router.group('/employee', (router) => {
+        router.get('/', employeeController.index)
+        router.post('/store', employeeController.store)
+        router.put('/update/:id', employeeController.update)
+        router.get('/show/:id', employeeController.show)
+        router.delete('/delete/:id', employeeController.destroy)
+    })
+
+    // Jobs
+    router.group('/jobs', (router) => {
+        router.get('/', jobController.index)
     })
 })
 

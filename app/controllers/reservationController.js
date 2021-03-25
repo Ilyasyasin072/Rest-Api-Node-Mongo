@@ -130,7 +130,10 @@ const show = async (req, res) => {
 
     aggregateQuery.exec((err, result) => {
         if (err) throw err;
-        res.json(result)
+        
+        const data = new ApiResponser('GET', result, 200)
+
+        res.json(data.data)
     })
 
 }
