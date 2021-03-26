@@ -55,7 +55,7 @@ const login = async (req, res) => {
                         id: user._id
                     },
                         config.secret, {
-                        expiresIn: 86400
+                        expiresIn: 86400 // 24 HOUR
                     })
 
                     if (!token) return res.status(500).json({ 'status': 'Not Allowed Token' })

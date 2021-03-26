@@ -34,14 +34,16 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.get('/', function () {
+app.get('/', function (req, res) {
+    res.json({
+        message : 'Node js Backend Running'
+    })
     console.log('Server Starting');
 })
 
 
 app.use('/api', [verifyToken],  routers);
 app.use('/auth', auth)
-// app.use('/auth', auth);
 
 app.use(function (req, res) {
     if (res.status(404)) {
