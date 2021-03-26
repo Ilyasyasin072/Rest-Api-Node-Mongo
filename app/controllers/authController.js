@@ -19,7 +19,7 @@ const register = async (req, res) => {
         name: name,
         username: username,
         email: email,
-        password: hashedPassword
+        password: hashedPassword,
     }
 
     User.create(userField, ((err, user) => {
@@ -58,10 +58,41 @@ const login = async (req, res) => {
                         expiresIn: 86400
                     })
 
+                    // console.log(user)
+
+                    // user.updateOne({
+                    //     _token : token
+                    // })
+
                     // console.log(token)
                     // var token = req.headers['x-access-token']
                     if (!token) return res.status(500).json({ 'status': 'Not Allowed Token' })
                     jwt.verify(token, config.secret, function (err, decoded) {
+                        
+                        // user.updateOne({
+                        //     _id: decoded.id
+                        // }, {
+                        //     _token : token
+                        // })
+
+                        user.save(function(err, user) {
+                            if (err) {
+                              return callback(err);
+                            } else {
+                              console.log("Returned user:");
+                              console.dir(user);
+                            //   User.find({}, "+token +password", function(err, foundUser) {
+                            //     if (err) {
+                            //       throw err;
+                            //     } else {
+                            //       console.log(JSON.stringify(foundUser));
+                            //     }
+                            //   });
+                            //   callback(null, new SuccessEnvelope(user));
+                            }
+                          });
+
+
                         if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
                         res.cookie('jwt', token);
                         return res.status(200).json({ msg: "Login success", user: user })

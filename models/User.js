@@ -2,12 +2,11 @@ const {Schema, model} = require('../config/database')
 let mongooseHidden = require('mongoose-hidden')()
 
 const userSchema = new Schema({
-    
     name: String,
     username: String,
     email: String,
     password: { type: String, hide: true },
-
+    _token : {type: String, default: null}
 }, {
 
     timestamps: true, versionKey: false  
