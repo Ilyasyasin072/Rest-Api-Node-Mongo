@@ -3,18 +3,22 @@ const ApiResponser = require('./traits/ApiResponse');
 var jwt = require('jsonwebtoken');
 const config = require('../../config/config')
 
-const index = async (req, res) => {
-    try {
-        // var token = req.headers['x-access-token']
-        // if (!token) return res.status(500).json({ 'status': 'Not Allowed Token' })
-        // jwt.verify(token, config.secret, async (err, decoded) => {
-        //     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-        //     res.cookie('jwt', token);
-            var category = await Category.find()
-            var data = new ApiResponser('GET', category, 200);
-            res.json(data.data);
-        // })
+const categoryFind = () => (new Promise((resolve, reject) => {
 
+    Category.find().exec((err, result) => {
+        var data = new ApiResponser('GET', result, 200);
+        const hasil = data.data;
+        resolve(result)
+    })
+}))
+
+
+const index = async (req, res) => {
+
+    try {
+        var category = await categoryFind()
+        var data = new ApiResponser('GET', category, 200);
+        res.json(data.data);
     } catch (error) {
         var err = new ApiResponser('Error', error.message, 500);
 
