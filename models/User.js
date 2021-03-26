@@ -6,7 +6,7 @@ const userSchema = new Schema({
     username: String,
     email: String,
     password: { type: String, hide: true },
-    _token : {type: String, default: null}
+    _token : String,
 }, {
 
     timestamps: true, versionKey: false  
