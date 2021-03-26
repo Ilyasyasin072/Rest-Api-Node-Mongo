@@ -20,7 +20,8 @@
     "express-kun": "^1.0.24",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.5",
-    "mongoose": "^5.12.2"
+    "mongoose": "^5.12.2",
+    "mongoose-hidden": "^1.9.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"

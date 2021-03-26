@@ -43,27 +43,39 @@ const login = async (req, res) => {
     const { username, password } = req.body;
 
     if (username && password) {
-        const users = await User.findOne({ username: username }).then(user => {
+
+        const users = await User.findOne({ username: username }).then((user) => {
 
             bcrypt.compare(password, user.password, (err, data) => {
                 if (err) throw err;
 
                 if (data) {
-                    var token = req.headers['x-access-token']
+
+                    var token = jwt.sign({
+                        id: user._id
+                    },
+                        config.secret, {
+                        expiresIn: 86400
+                    })
+
+                    // console.log(token)
+                    // var token = req.headers['x-access-token']
                     if (!token) return res.status(500).json({ 'status': 'Not Allowed Token' })
                     jwt.verify(token, config.secret, function (err, decoded) {
                         if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-                        res.cookie('jwt',token);
-                        return res.status(200).json({ msg: "Login success" })
+                        res.cookie('jwt', token);
+                        return res.status(200).json({ msg: "Login success", user: user })
                     })
+                    
                 } else {
                     return res.status(401).json({ msg: "Invalid credencial" })
                 }
             })
         })
+        
         return users
     } else {
-        return res.status(401).json({ msg: "Invalid credencial" })
+        return res.status(401).json({ msg: "Check Username and Password" })
     }
 }
 

@@ -14,15 +14,21 @@ const employeeController = require('../app/controllers/employeeController')
 const jobController = require('../app/controllers/jobController')
 const checkController = require('../app/controllers/checkController')
 const authController = require('../app/controllers/authController')
-
+const paymentController = require('../app/controllers/paymentController')
 
 router.group('/v1', (router) => {
 
+    express.application.prefix = express.Router.prefix = function (path, middleware, configure) {
+        configure(router);
+        this.use(path, middleware, router);
+        return router;
+    }
+
     // Auth
-    router.group('/auth', (router) => {
-        router.post('/register', authController.register)
-        router.post('/login', authController.login)
-    })
+    // router.group('/auth', (router) => {
+    //     router.post('/register', authController.register)
+    //     router.post('/login', authController.login)
+    // })
 
     // Customer
     router.group('/customer', (router) => {
@@ -79,24 +85,14 @@ router.group('/v1', (router) => {
     })
 
     // Check
-    express.application.prefix = express.Router.prefix = function(path, middleware, configure) {
-        configure(router);
-        this.use(path, middleware, router);
-        return router;
-    }
-
-    router.prefix('/check', [verifyToken], async function (user) {
+    router.group('/check', (router) => {
         router.get('/', checkController.index)
-        router.post('/store', [verifyToken], checkController.store)
-        // user.route('/details').get(function(req, res) {
-        //     res.status(201).send('Hello this is my personal details')
-        // }); //also you can use controller method if you have any
-    });
+        router.post('/store', checkController.store)
+    })
 
-    // router.group('/check', (router) => {
-    //     router.get('/', [verifyToken], checkController.index)
-    //     router.post('/store', [verifyToken], checkController.store)
-    // })
+    router.group('/payment', (router) => {
+        router.get('/', paymentController.index)
+    })
 })
 
 module.exports = router

@@ -23,7 +23,7 @@ const index = async (req, res) => {
 const store = async (req, res) => {
 
     const customer = {
-        name: 'hai hai',
+        name: 'hai hai pake prefix',
         phone_number: '12321',
         address: 'asdasd',
         point: '0',
