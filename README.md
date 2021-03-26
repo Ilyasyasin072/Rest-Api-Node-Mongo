@@ -10,6 +10,27 @@
 - body-parse
 - router-group
 
+### Export Data With Mongodb 
+
+```
+    mongoexport -v --uri "mongodb://localhost:27017/reservasi"  -c "categories" --out /home/usr/categories.json  --type json
+    mongoexport -v --uri "mongodb://localhost:27017/reservasi"  -c "checks" --out /home/usr/checks.json  --type json
+    mongoexport -v --uri "mongodb://localhost:27017/reservasi"  -c "customers" --out /home/usr/customers.json  --type json
+    mongoexport -v --uri "mongodb://localhost:27017/reservasi"  -c "employees" --out /home/usr/employees.json  --type json
+    mongoexport -v --uri "mongodb://localhost:27017/reservasi"  -c "fleets" --out /home/usr/fleets.json  --type json
+    mongoexport -v --uri "mongodb://localhost:27017/reservasi"  -c "jobs" --out /home/usr/jobs.json  --type json
+    mongoexport -v --uri "mongodb://localhost:27017/reservasi"  -c "payment" --out /home/usr/payment.json  --type json
+    mongoexport -v --uri "mongodb://localhost:27017/reservasi"  -c "payments" --out /home/usr/payments.json  --type json
+    mongoexport -v --uri "mongodb://localhost:27017/reservasi"  -c "reservations" --out /home/usr/reservations.json  --type json
+    mongoexport -v --uri "mongodb://localhost:27017/reservasi"  -c "rooms" --out /home/usr/rooms.json  --type json
+    mongoexport -v --uri "mongodb://localhost:27017/reservasi"  -c "users" --out /home/usr/users.json  --type json
+    mongoexport -v --uri "mongodb://localhost:27017/reservasi"  -c "Views.chunks" --out /home/usr/Views.chunks.json  --type json
+    mongoexport -v --uri "mongodb://localhost:27017/reservasi"  -c "Views.files" --out /home/usr/Views.files.json  --type json
+    mongoexport -v --uri "mongodb://localhost:27017/reservasi"  -c "Views.view_pegawai_pendidikan" --out /home/usr/Views.view_pegawai_pendidikan.json  --type json
+    mongoexport -v --uri "mongodb://localhost:27017/reservasi"  -c "Views.view_reservasi_join" --out /home/usr/Views.view_reservasi_join.json  --type json
+
+```
+
 ## Result 
 
 - Request:
