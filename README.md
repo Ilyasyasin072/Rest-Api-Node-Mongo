@@ -6,7 +6,7 @@
 - node js
 - npm
 - nodemon
-- mongoos
+- mongoose
 - body-parse
 - router-group
 
