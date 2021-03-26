@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
 const { Schema, model } = mongoose
-
-const url = 'mongodb://localhost:27017/reservasi';
+require('dotenv').config()
+// const url = 'mongodb://localhost:27017/reservasi';
+const url = process.env.DB_DATABASE
 
 const options = {
+    
     useNewUrlParser: true,
     useCreateIndex: true,
     autoIndex: true, //this is the code I added that solved it all

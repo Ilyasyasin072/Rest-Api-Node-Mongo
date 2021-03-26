@@ -20,6 +20,7 @@ const register = async (req, res) => {
         username: username,
         email: email,
         password: hashedPassword,
+        _token: null
     }
 
     User.create(userField, ((err, user) => {
@@ -64,7 +65,7 @@ const login = async (req, res) => {
                         if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
                         // set cookie
                         res.cookie('jwt', token)
-                        res.cookie('_id', decoded.id)
+                        res.cookie('_id', decoded.id, { })
                         return res.status(200).json({ msg: "Login success", user: user })
                     })
 
@@ -82,9 +83,6 @@ const login = async (req, res) => {
             _token : cook.jwt
         })
 
-        console.log(updateToken)
-        
-        return users
     } else {
         return res.status(401).json({ msg: "Check Username and Password" })
     }
